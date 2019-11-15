@@ -16,11 +16,35 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
+from django.shortcuts import render
 
-def index(request):
-    return HttpResponse("Hello, world.")
+# def index(request):
+#     return HttpResponse("andi oop.")
+
+def dashboard(request):
+    return render(request, 'stock_prediction/dashboard.html', {})
+
+def saved(request):
+    return render(request, 'stock_prediction/saved.html', {})
+
+def search(request):
+    return render(request, 'stock_prediction/search.html', {})
+
+def details(request):
+    return render(request, 'stock_prediction/details.html', {})
+
+
+
+
+# def index(request):
+#     return render(request, 'stock_prediction/dashboard.html', {})
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
+    path('dashboard/', dashboard),
+    path('saved/', saved),
+    path('search/', search),
+    path('details/', details),
 ]
