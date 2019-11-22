@@ -1,6 +1,12 @@
 ##Code for storing the stocks into the database (model) 
 
 from django.db import models
+import array 
+
+class stock():
+    def __init__(self,name,price):
+        self.name = name
+        self.price = float(price)
 
 
 class user(models.Model):
@@ -22,9 +28,23 @@ class saved_stocks(models.Model):
     stock_price = models.IntegerField()
 
     user_who_saved_stock = models.ForeignKey(user, on_delete = models.CASCADE)
+
+
+    def add_stock(add_stock):
+        STOCK_ARRAY.append(add_stock)
+    def remove_stock(remove_stock):
+        ##need to add array parsing to make sure the remove_stock object is actually in the saved_stock_array
+        STOCK_ARRAY.remove(remove_stock)
+        
     
 
     
+
+    
+    
+    
+
+
 
     
     
