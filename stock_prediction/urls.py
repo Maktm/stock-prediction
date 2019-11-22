@@ -20,7 +20,7 @@ from django.urls import path, include
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from . import api
+from . import api, models
 
 # def index(request):
 #     return HttpResponse("andi oop.")
@@ -51,14 +51,18 @@ def dashboard(request):
     })
 
 def saved(request):
-    stocklist = []  
-    stocklist.append( stocks('Saved Stock 1', 'Company', 0, 'price increase', 'increase') ) 
-    stocklist.append( stocks('Saved Stock 2', 'Company', 0, 'price increase', 'increase') ) 
-    stocklist.append( stocks('Saved Stock 3', 'Company', 0, 'price decrease', 'decrease') )
+    saved_stocks = []
+    try:
+        results = models.SavedStock.objects.filter(user=request.user)
+        for r in results:
+            saved_stocks.append(stocks('Saved Stock 1', r.name, 'Getting latest price', 'price increase/decrease', 'increase'))
+    except Exception as error:
+        # Failed to find any saved stocks
+        pass
 
     context= {
-        'stocks': stocklist,
-        }
+        'stocks': saved_stocks,
+    }
     return render(request, 'stock_prediction/saved.html', context)
 
 def search(request, keywords=None):
