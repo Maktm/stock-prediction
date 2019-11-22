@@ -81,10 +81,18 @@ def search(request, keywords=None):
 
     return render(request, 'stock_prediction/search.html', context)
 
-def details(request):
+def details(request, keywords=None):
+
+    if not keywords is None:
+        result = keywords
+
+
+
+
     stockdetail = stocks('NASDAQ', 'NASDAQ Composite', 7950.86, '+48.67', 'increase') 
     context= {
         'stock': stockdetail,
+        'name': result
         }
     return render(request, 'stock_prediction/details.html', context)
 
@@ -105,9 +113,11 @@ urlpatterns = [
     path('saved/', saved),
     path('search/', search),
     path('search/<keywords>/', search),
-    path('details/', details),
+    path('details/<keywords>', details),
+    path('accounts/', include('django.contrib.auth.urls')),
+   
 ]
 
-urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
-]
+# urlpatterns += [
+    
+# ]

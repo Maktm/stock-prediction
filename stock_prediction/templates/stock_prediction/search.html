@@ -97,7 +97,7 @@
 
     <div class="navigation">
         <div class="title"><h2>Stock Prediction Tool</h2></div>
-        <div class="date">MONDAY <b>NOVEMBER 18, 2019</b> </div>
+  
 
         <a href="/dashboard/" class="btn btn-dark" role="button">Dashboard</a>
         <a href="/search/"  class="btn btn-dark active" role="button">Search Stocks</a>
@@ -177,7 +177,10 @@
                                                 <button type="button" class="btn btn-danger stockbutton">{{ stock.change }}</button>
                                                 {% endif %}
                                                
-                                                <button type="button" class="btn btn-info stockbutton">View Details</button>
+                                                <!-- <button type="button" class="btn btn-info stockbutton">View Details</button> -->
+
+                                                <a href="http://127.0.0.1:8000/details/{{stock.name}}">View Details</a>
+                                                
                                                 <button type="button" class="btn btn-primary stockbutton">Save Stock</button>
                                             </div>
                                         </div>
@@ -204,6 +207,12 @@
             // Send a request back to the Django web application
             let inputData = document.getElementsByTagName('input')[0].value;
             window.location = 'http://127.0.0.1:8000/search/' + inputData;
+        }
+
+        function onDetailsClicked() {
+            // Send a request back to the Django web application
+            let inputData = document.getElementsByTagName('value')[0].value;
+            window.location = 'http://127.0.0.1:8000/details/' + inputData;
         }
     </script>
 </body>
