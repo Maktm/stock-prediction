@@ -21,17 +21,52 @@ from django.shortcuts import render
 # def index(request):
 #     return HttpResponse("andi oop.")
 
+
+class stocks:  
+    def __init__(stock, name, company, price, change, arrow):  
+        stock.name = name  
+        stock.company = company
+        stock.price = price
+        stock.change = change
+        stock.arrow = arrow
+   
+# creating list        
+
+
+
 def dashboard(request):
     return render(request, 'stock_prediction/dashboard.html', {})
 
 def saved(request):
-    return render(request, 'stock_prediction/saved.html', {})
+    stocklist = []  
+    stocklist.append( stocks('Saved Stock 1', 'Company', 0, 'price increase', 'increase') ) 
+    stocklist.append( stocks('Saved Stock 2', 'Company', 0, 'price increase', 'increase') ) 
+    stocklist.append( stocks('Saved Stock 3', 'Company', 0, 'price decrease', 'decrease') )
+
+    context= {
+        'stocks': stocklist,
+        }
+    return render(request, 'stock_prediction/saved.html', context)
 
 def search(request):
-    return render(request, 'stock_prediction/search.html', {})
+    stocklist = []  
+    stocklist.append( stocks('NASDAQ', 'NASDAQ Composite', 7950.86, '+48.67', 'increase') ) 
+    stocklist.append( stocks('AAPL', 'Apple Inc.', 230.09, '1.040T', 'increase') ) 
+    stocklist.append( stocks('SBUX', 'Starbucks Corporation', 85.82, '102.7B', 'decrease') )
+
+    context= {
+        'stocks': stocklist,
+        }
+    return render(request, 'stock_prediction/search.html', context)
 
 def details(request):
-    return render(request, 'stock_prediction/details.html', {})
+    stockdetail = stocks('NASDAQ', 'NASDAQ Composite', 7950.86, '+48.67', 'increase') 
+    context= {
+        'stock': stockdetail,
+        }
+    return render(request, 'stock_prediction/details.html', context)
+
+
 
 
 
