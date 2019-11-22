@@ -1,25 +1,21 @@
+{% if user.is_authenticated %}
 <style type="text/css">
-
 h1{
     color: red;
 }
-
-
 </style>
 
-
-
 <body>
-
     <head>
-
     </head>
-
 
     <h1> DASHBOARD</h1>
     <a href="/search/">SEARCH</a>
     <a href="/saved/">SAVED</a>
     <a href="/details/">DETAILS</a>
-
 </body>
-
+{% else %}
+    <a href="/accounts/login">
+        <h1>OMG, CAN YOU SIGN IN FIRST?!</h1>
+    </a>
+{% endif %}

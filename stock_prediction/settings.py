@@ -57,7 +57,7 @@ TEMPLATES_PATH = os.path.join('stock_prediction', "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_PATH],
+        'DIRS': [TEMPLATES_PATH, os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/dashboard'
+
+# Logs to the console whenever an email is sent (added due to lack of email support)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
