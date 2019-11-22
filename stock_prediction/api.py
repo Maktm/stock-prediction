@@ -10,6 +10,7 @@ import requests
 
 API_KEY = '5IPQ89L576QGG667'
 
+
 class StockQuote:
 	"""
 	Encapsulates a single stock quote for a given stock on
@@ -19,7 +20,8 @@ class StockQuote:
 	def __init__(self, symbol, date, price) -> None:
 		self.symbol = symbol
 		self.date = date
-		self.price = price
+		self.price = float(price)
+
 
 def get_stock_history(symbol) -> List[StockQuote]:
 	"""
@@ -47,6 +49,7 @@ def get_stock_history(symbol) -> List[StockQuote]:
 
 	return stock_quotes
 
+
 def get_stock_quote(symbol) -> StockQuote:
 	"""
 	Returns the latest stock quote of a stock. Note that the stock price
@@ -56,3 +59,18 @@ def get_stock_quote(symbol) -> StockQuote:
 	"""
 	quotes = get_stock_history(symbol)
 	return quotes[0]
+
+
+def get_stock_change(symbol) -> float:
+	"""
+	Gets the difference in price between today and yesterday for
+	displaying as price increase/decrease.
+	"""
+	prices = get_stock_history(symbol)
+	today_price = prices[0].price
+	yesterday_price = prices[1].price
+
+	return today_price - yesterday_price
+
+
+print(get_stock_change('AAPL'))
