@@ -1,7 +1,6 @@
 """
 Connects to the Alpha Vantage API to retrieve stocks information.
 """
-
 from typing import List
 
 import json
@@ -17,10 +16,11 @@ class StockQuote:
 	a single day. The price for the stock is the closing
 	price of the stock on day date.
 	"""
-	def __init__(self, symbol, date, price) -> None:
+	def __init__(self, symbol, date, price, company=None, history=None) -> None:
 		self.symbol = symbol
 		self.date = date
 		self.price = price
+		self.company = company
 
 
 def get_stock_history(symbol) -> List[StockQuote]:
@@ -102,6 +102,7 @@ def search_stock_quote(keywords) -> List[StockQuote]:
 		# TODO: For each quote, get the information
 		try:
 			quote = get_stock_quote(r['1. symbol'])
+			quote.company = r['2. name']
 		except:
 			# Probably AlphaVantage rate limiting
 			continue

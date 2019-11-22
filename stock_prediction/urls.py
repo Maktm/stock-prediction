@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import datetime
+import json
 
 from django.contrib import admin
 from django.urls import path, include
@@ -74,7 +75,7 @@ def search(request, keywords=None):
         results = api.search_stock_quote(keywords)
         stocklist = []
         for r in results:
-            stocklist.append(stocks(r.symbol, '<COMPANY>', r.price, '<DIFFERENCE>', 'increase'))
+            stocklist.append(stocks(r.symbol, r.company, r.price, '<DIFFERENCE>', 'increase'))
         context = {
             'stocks': stocklist,
         }
@@ -89,7 +90,15 @@ def details(request):
     return render(request, 'stock_prediction/details.html', context)
 
 
-
+def save(request):
+    data = json.loads(request.text)
+    entry = models.SavedStock.objects.create(
+        user=request.user,
+        symbol=data['symbol'],
+        name=data['name']
+    )
+    entry.save()
+    return ''
 
 
 
@@ -106,6 +115,7 @@ urlpatterns = [
     path('search/', search),
     path('search/<keywords>/', search),
     path('details/', details),
+    path('save/', save),
 ]
 
 urlpatterns += [
