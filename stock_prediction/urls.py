@@ -62,15 +62,18 @@ def saved(request):
     return render(request, 'stock_prediction/saved.html', context)
 
 def search(request, keywords=None):
-    results = api.search_stock_quote(keywords)
-
-    stocklist = []
-    for r in results:
-        stocklist.append(stocks(r.symbol, '<COMPANY>', r.price, '<DIFFERENCE>', 'increase'))
-
-    context= {
-        'stocks': stocklist,
+    results = None
+    context = {
+        'stocks': []
     }
+    if not keywords is None:
+        results = api.search_stock_quote(keywords)
+        stocklist = []
+        for r in results:
+            stocklist.append(stocks(r.symbol, '<COMPANY>', r.price, '<DIFFERENCE>', 'increase'))
+        context = {
+            'stocks': stocklist,
+        }
 
     return render(request, 'stock_prediction/search.html', context)
 

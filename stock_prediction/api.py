@@ -82,10 +82,14 @@ def search_stock_quote(keywords) -> List[StockQuote]:
 
 	Returns an empty List if nothing is found.
 	"""
-	response = requests.get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={}&apikey={}'.format(
-		keywords,
-		API_KEY
-	))
+	try:
+		response = requests.get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={}&apikey={}'.format(
+			keywords,
+			API_KEY
+		))
+	except Exception as error:
+		print(error)
+		return []
 
 	try:
 		data_key = 'bestMatches'
