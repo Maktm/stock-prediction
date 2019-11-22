@@ -10,6 +10,7 @@ import requests
 
 API_KEY = '5IPQ89L576QGG667'
 
+
 class StockQuote:
 	"""
 	Encapsulates a single stock quote for a given stock on
@@ -20,6 +21,7 @@ class StockQuote:
 		self.symbol = symbol
 		self.date = date
 		self.price = price
+
 
 def get_stock_history(symbol) -> List[StockQuote]:
 	"""
@@ -47,6 +49,7 @@ def get_stock_history(symbol) -> List[StockQuote]:
 
 	return stock_quotes
 
+
 def get_stock_quote(symbol) -> StockQuote:
 	"""
 	Returns the latest stock quote of a stock. Note that the stock price
@@ -54,5 +57,50 @@ def get_stock_quote(symbol) -> StockQuote:
 	the previous day.
 	TODO: Consider using a different API call to speed it up.
 	"""
-	quotes = get_stock_history(symbol)
-	return quotes[0]
+	print('finding: ' + symbol)
+	response = requests.get('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={}&apikey={}'.format(
+		symbol,
+		API_KEY
+	))
+
+	try:
+		print(response.text)
+		data_key = 'Global Quote'
+		data = dict(json.loads(response.text))[data_key]
+	except:
+		raise Exception('Bad symbol given') # TODO: Bad idea
+
+	date = data['07. latest trading day'] # TODO: Improve date formatting
+	price = data['05. price']
+	return StockQuote(symbol, date, price)
+
+
+def search_stock_quote(keywords) -> List[StockQuote]:
+	"""
+	Searches for the specified text, keywords using the AlphaVantage API and
+	returns the quotes for any stock quotes that match the text (even partially).
+
+	Returns an empty List if nothing is found.
+	"""
+	response = requests.get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={}&apikey={}'.format(
+		keywords,
+		API_KEY
+	))
+
+	try:
+		data_key = 'bestMatches'
+		data = dict(json.loads(response.text))[data_key]
+	except:
+		return []
+
+	results = []
+	for r in data:
+		# TODO: For each quote, get the information
+		try:
+			quote = get_stock_quote(r['1. symbol'])
+		except:
+			# Probably AlphaVantage rate limiting
+			continue
+		results.append(quote)
+
+	return results
