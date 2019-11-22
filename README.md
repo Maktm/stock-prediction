@@ -33,4 +33,6 @@ The stock prediction tool works such that when a user logs in, they will see the
 
 * Search/Details Page:  this page will allow the user to search for stocks and interest and possibly see the details of the stock as to                         what the company is about and how long they have been on the stock market.  
 
+* Help Page:  this page will guide the user on how to use our tool, much like this section of the README file.  
+
 * Prediction Page:  this page is the entire basis for our project, since it will show the predicted future stock price for a particular                     stock according to the previous stock changes and news surrounding the company, CEO, etc.  
