@@ -60,15 +60,12 @@
     .col-sm{
         border: none;
     }
-/* 
-    .search{
-        width: 500px !important;
-    }
+
 
     .dropdown{
-        width: 200px;
+        width: 100px;
        
-    } */
+    } 
 
     .stockimage{
         background-color: black;
@@ -105,23 +102,28 @@
     }
 
    .photo{
-        width: 500px;
-        height: 500px;
-        background-color: pink;
+        width: 700px;
+        height: 350px;
+        background-color: black;
+
     } 
 
 </style>
 <body>
-    <head>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
-    </head>
+
+        <head>
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+               <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
+        </head>
+
+
 
     
-
+    
     <div class="navigation">
         <div class="title"><h2>Stock Prediction Tool</h2></div>
 
@@ -136,113 +138,101 @@
 
             <div class="stocktitle">
 
-
-
-                    <div class="container">
-                            <div class="row">
-                                    <div class="col-sm"></div>
-                                 <button type="button" class="btn btn-success detailbutton" disabled>{{ stock.change }}</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm"></div>
                               
+                            {% if stock.change >= 0 %}
+                            <button type="button" class="btn btn-success detailbutton">{{ stock.change }}</button>
+                            {% else %}
+                            <button type="button" class="btn btn-danger detailbutton">{{ stock.change }}</button>
+                            {% endif %}
+
                               <div class="col-sm">
-                                <h1> {{name}}</h1>
-                                {{ name }}<br />
+                                <h1> {{ stock.symbol}}</h1>
+                                {{ stock.symbol }}<br />
                                 <b>{{ stock.price }}</b>
                               </div>
+                           
                               <div class="col-sm"></div>
                             </div>
                           </div>
            </div>
 
 
+<!-- /************************************************************/ -->
+<div class="card">
+        <div class="card-body">
            <div class="container">
                 <div class="row">
+                        <div class="col-sm"></div>
+                    <h1>Stock Details for {{ stock.symbol }}</h1>
+                    <div class="col-sm"></div>
+                </div>
+                <div class="row">
         
-                        <div class="col-sm">
+                    <div class="col-sm">
                             
                             
                                 <div class="card">
                                         <div class="card-body">
-                                                <div class="photo"></div>
+                                                <div class="photo">
+                                                        <canvas id="myChart"></canvas>
+                                                </div>
+
+
+
                                         </div>
                                       </div>
-                            
-                            
-                    
-                    
-                    
                     
                     </div>
-                    
-                    
-                    
-                    
-                        <div class="col-sm">
-
-            <div class="card mb-3" style="width: 32rem;">
-                                   
-                    <div class="row no-gutters">
-                        
-                        <div class="col-md-8">
+                    <div class="col-sm">
+                    <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Stock Details </h5>
-                                <p class="card-text"></p>
-                                <h6 class="card-subtitle mb-2 text-muted"></h6>
-
-
-                                <div class="container">
-                                        <div class="row">
-                                          <div class="col-sm">
-                                            Open<br />
-                                            High<br />
-                                            Low<br />
-                                            <br />
-                                            52W H<br />
-                                            52W L<br />
-                                            Avg Vol<br />
-                                            <br />
-                                            Vol<br />
-                                            P/E<br />
-                                            Mkt Cap
-
-                                
-                                          </div>
-                                          <div class="col-sm"><b>
-                                            7,904.56<br />
-                                            7,982.84<br />
-                                            7,899.81<br />
-                                            <br />
-                                            8,339.64<br />
-                                            6,190.17<br />
-                                            2.042B<br />
-                                            <br />
-                                            1.584B<br />
-                                            -<br />
-                                            -</b><br />
-
-                                          </div>
-
-                                        </div>
-                                        
-                                      </div>
-                               
-                               
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <div class="row">
+                        <div class="col-sm">
+                            Open<br />
+                            High<br />
+                            Low<br />
+                            <br />
+                            52W H<br />
+                            52W L<br />
+                            Avg Vol<br /> 
+                            <br />
+                            Vol<br />
+                            P/E<br />
+                            Mkt Cap
                 
+                          </div>
+                          <div class="col-sm"><b>
+                                {{ stock.open }}<br />
+                                {{ stock.high}}<br />
+                                {{ stock.low }}<br />
+                                <br />
+                                -<br />
+                                -<br />
+                                -<br />
+                                <br />
+                                {{ stock.volume }}<br />
+                                -<br />
+                                -</b><br />
+
+                              </div></div>
+                            </div>
+                        
+                        </div>
+                        </div>
+                        
             
-            
-            </div>
         
-            <div class="col-sm">
+           
 
                    
 
             </div>
         
         </div>
+        </div></div>
 
 
 
@@ -250,11 +240,48 @@
                 <div class="col-sm">
                         <div class="card" style="width: 100%;">
                                 <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-m">
+
                                   <h6 class="card-subtitle mb-2 text-muted">Generate Predictions for</h6>
-                                  <h1>{{ name }}</h1>
-                                  <p class="card-text">Based on Data From </p>
+                                  <h1>{{ stock.symbol }}</h1>
+                                  
                                   
                                 </div>
+                                
+                                <div class="col-sm">
+                                    
+                                    <div class="row">
+                                        <div class="col-m">
+                                        <p class="card-text">Based on Data From </p>
+                                        <input type="text" size="5"/>
+                                        <div class="dropdown">
+                                                
+                                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   Time: 
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                  <button class="dropdown-item" type="button" value="low"> weeks</button>
+                                                  <button class="dropdown-item" type="button" value="high">years</button>
+                                                 
+                                                </div>
+                                              </div>
+                                    </div>
+                                    </div>
+                                    
+                                    
+                                       
+
+
+
+
+                                </div>
+                                <div class="col-sm">For the Next</div>
+                                <div class="col-sm"></div>
+
+                            </div>
                               </div>
                   </div>
         </div>
@@ -264,13 +291,42 @@
     </div>
     
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script type="application/javascript">
+      
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var daily = {{daily}};
+    
     
 
-
-    <!-- <h1> DASHBOARD</h1>
-    <a href="/search/">SEARCH</a>
-    <a href="/saved/">SAVED</a>
-    <a href="/details/">DETAILS</a> -->
+        
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+        
+            // The data for our dataset
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                datasets: [{
+                    label: 'Stock Prices',
+                    backgroundColor: 'rgba(43, 255, 0, 0.25)',
+                    borderColor: 'rg[b(43, 255, 0)',
+                    data: daily,
+                }]
+            },
+        
+            // Configuration options go here
+            options: {
+                legend: {
+                    labels: {
+                // This more specific font property overrides the global property
+                        fontColor: 'white'
+                }
+                }
+            }
+        });</script>
 
 </body>
 {% else %}

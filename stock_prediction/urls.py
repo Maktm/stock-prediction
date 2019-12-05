@@ -27,12 +27,11 @@ from . import api, models
 
 
 class stocks:  
-    def __init__(stock, name, company, price, change, arrow):
-        stock.name = name  
-        stock.company = company
+    def __init__(stock, symbol, price, change):
+        stock.symbol = symbol 
         stock.price = price
         stock.change = change
-        stock.arrow = arrow
+        
    
 # creating list        
 
@@ -74,35 +73,36 @@ def search(request, keywords=None):
         results = api.search_stock_quote(keywords)
         stocklist = []
         for r in results:
-            stocklist.append(stocks(r.symbol, '<COMPANY>', r.price, '<DIFFERENCE>', 'increase'))
+            stocklist.append(stocks(r.symbol, r.price, r.change))
         context = {
             'stocks': stocklist,
         }
 
     return render(request, 'stock_prediction/search.html', context)
 
+
 def details(request, keywords=None):
-
+    
+    daily = []
+ 
     if not keywords is None:
-        result = keywords
+        stockdetail = api.get_stock_quote(keywords)
+        stockhistory = api.get_stock_history(keywords)
 
-
-
-
-    stockdetail = stocks('NASDAQ', 'NASDAQ Composite', 7950.86, '+48.67', 'increase') 
+    for i in range(5):
+        daily.append(float(stockhistory[i].price))
+       
+       
+       
+           
     context= {
         'stock': stockdetail,
-        'name': result
-        }
+        'daily': daily,
+       
+        
+    }
     return render(request, 'stock_prediction/details.html', context)
 
-
-
-
-
-
-# def index(request):
-#     return render(request, 'stock_prediction/dashboard.html', {})
 
 
 
@@ -118,6 +118,3 @@ urlpatterns = [
    
 ]
 
-# urlpatterns += [
-    
-# ]

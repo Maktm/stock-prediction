@@ -47,21 +47,11 @@
         
         
     }
-/* 
-    .search{
-        width: 500px !important;
-    }
-
-    .dropdown{
-        width: 200px;
-       
-    } */
 
     .stockimage{
-        background-color: black;
+        background-color: none;
         position: absolute;
         z-index: 10;
-       
     }
     
     .card{
@@ -77,8 +67,25 @@
         font-size: 30px;
     }
     .stockbutton{
+        font-size: 50px;
+        width: 100%;
+        
+    }
+    .noresult{
+        height: 500px;
+        text-align: center;
         font-size: 20px;
-        width: 150px;
+        color: gray;
+    }
+    .detailbutton{
+        font-size: 70px !important;
+        height: 150px;
+        width: 100%;
+        min-width: 300px;
+        padding: 10px;
+        margin: 20px auto;
+        
+        
     }
 
 
@@ -140,8 +147,9 @@
                                     Sort By: 
                                  </button>
                                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                   <button class="dropdown-item" type="button">Price</button>
-                                   <button class="dropdown-item" type="button">Alphabetically</button>
+                                   <button class="dropdown-item" type="button" value="low" onclick="onSortClicked()"> Lowest Price</button>
+                                   <button class="dropdown-item" type="button" value="high" onclick="onSortClicked()">Highest Price</button>
+                                   <button class="dropdown-item" type="button" value="alpha" onclick="onSortClicked()">Alphabetically</button>
                                   
                                  </div>
                                </div>
@@ -155,39 +163,63 @@
                       <div class="col-sm">
 
 
+                            
+                            {% if stocks %}
+
                             {% for stock in stocks %}
                            
                             <div class="card mb-3">
                                    
                                     <div class="row no-gutters">
                                         <div class="col-md-4 stockimage">
+                                            {% if stock.change >= 0 %}
+                                            <button type="button" class="btn btn-success detailbutton">{{ stock.change }}</button>
                                            
+                                            {% else %}
+                                            <button type="button" class="btn btn-danger detailbutton">{{ stock.change }}</button>
+                                            {% endif %}
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <h5 class="card-title"> {{ stock.name }}</h5>
-                                                <p class="card-text">{{ stock.company }}</p>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
+                                            <div class="row">
 
-
-                                                {% if stock.arrow == "increase" %}
-                                                <button type="button" class="btn btn-success stockbutton">{{ stock.change }}</button>
-                                                {% endif %}
-                                                {% if stock.arrow == "decrease" %}
-                                                <button type="button" class="btn btn-danger stockbutton">{{ stock.change }}</button>
-                                                {% endif %}
-                                               
-                                                <!-- <button type="button" class="btn btn-info stockbutton">View Details</button> -->
-
-                                                <a href="http://127.0.0.1:8000/details/{{stock.name}}">View Details</a>
+                                                <div class="col-sm">
+                                                    <h5 class="card-title"> {{ stock.symbol }}</h5>
+                                                    <h6 class="card-text">{{ stock.symbol }}</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
+                                                </div>
+                                                <div class="col-sm">
+                                                        <button type="button" class="btn btn-primary stockbutton" onclick="onDetailsClicked('{{stock.symbol}}')">View Details</button>
                                                 
-                                                <button type="button" class="btn btn-primary stockbutton">Save Stock</button>
+                                                        <button type="button" class="btn btn-secondary stockbutton">Save Stock</button>
+                                                </div>
+                                            </div>
+                                         
+                                               
+                                                
+
+
+                                                
+                                               
+
+                                           
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                       
                        {% endfor %}
+
+
+
+                       {% elif not stocks %}
+                       <div class="card noresult">
+                            <div class="card-body">
+                                No results were found.
+                      
+                            </div>
+                        </div>
+                       {% endif %}
                             </div>
                      
                     </div>
@@ -196,10 +228,7 @@
                   </div>
     </div>
 
-    <!-- <h1> DASHBOARD</h1>
-    <a href="/search/">SEARCH</a>
-    <a href="/saved/">SAVED</a>
-    <a href="/details/">DETAILS</a> -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script>
@@ -209,10 +238,16 @@
             window.location = 'http://127.0.0.1:8000/search/' + inputData;
         }
 
-        function onDetailsClicked() {
-            // Send a request back to the Django web application
+        function onSortClicked(){
             let inputData = document.getElementsByTagName('value')[0].value;
-            window.location = 'http://127.0.0.1:8000/details/' + inputData;
+            window.location = 'http://127.0.0.1:8000/search/' + inputData;
+        }
+
+        function onDetailsClicked(name) {
+            // Send a request back to the Django web application
+            // let inputData = document.getElementsByTagName('id')[0].value;
+            window.location = 'http://127.0.0.1:8000/details/' + name;
+            console.log(name);
         }
     </script>
 </body>

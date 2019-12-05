@@ -23,6 +23,22 @@ class StockQuote:
 		self.price = price
 
 
+class StockDetails:
+	def __init__(self, symbol, date, price, open, high, low, volume, previous_close, change, change_percent) -> None:
+		self.symbol = symbol
+		self.date = date
+		self.price = float(price)
+		self.open = float(open)
+		self.high = float(high)
+		self.low = float(low)
+		self.volume = volume 
+		self.previous_close = float(previous_close)
+		self.change = float(change)
+		self.change_percent = change_percent
+
+
+
+
 def get_stock_history(symbol) -> List[StockQuote]:
 	"""
 	Retrieves the stock quote history for the specified quote and
@@ -50,7 +66,7 @@ def get_stock_history(symbol) -> List[StockQuote]:
 	return stock_quotes
 
 
-def get_stock_quote(symbol) -> StockQuote:
+def get_stock_quote(symbol) -> StockDetails:
 	"""
 	Returns the latest stock quote of a stock. Note that the stock price
 	returned is not the intraday stock quote, but the closing price for
@@ -72,7 +88,17 @@ def get_stock_quote(symbol) -> StockQuote:
 
 	date = data['07. latest trading day'] # TODO: Improve date formatting
 	price = data['05. price']
-	return StockQuote(symbol, date, price)
+	open = data['02. open']
+	high = data['03. high']
+	low = data['04. low']
+	volume = data['06. volume']
+	previous_close = data['08. previous close']
+	change = data['09. change']
+	change_percent = data['10. change percent']
+
+	
+
+	return StockDetails(symbol, date, price, open, high, low, volume, previous_close, change, change_percent)
 
 
 def search_stock_quote(keywords) -> List[StockQuote]:
