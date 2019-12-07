@@ -1,1 +1,118 @@
+{% if user.is_authenticated %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Help Page</title>
+</head>
 
+<style type="text/css">
+    .pagecontent{
+        background-color: #544490;
+        color: #000;
+        position: absolute;
+
+    }
+    .navigation{
+        position: absolute;
+        width: 250px;
+        height: 1080px;
+        background-color: rgb(43, 43, 43);
+        z-index: 1000000;
+    }
+    .btn{
+        width: 100%;
+        height: 40px;
+        margin-top: 5px;
+
+    }
+    .title{
+        width: 150px;
+        height: auto;
+        margin-left: 90px;
+    }
+    .pagecontent{
+        width: 1366px;
+        height: 100vh;
+        margin-left: 270px;
+        position: absolute;
+    }
+    .pagetitle{
+        color: rgb(52, 52, 52);
+        font-size: 100px;
+        text-align: center;
+    }
+
+</style>
+
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<div class="navigation">
+    <div class="title"><h2>Stock Prediction Tool</h2></div>
+
+    <a href="/dashboard/" class="btn btn-dark" role="button">Dashboard</a>
+    <a href="/search/"  class="btn btn-dark" role="button">Search Stocks</a>
+    <a href="/saved/"  class="btn btn-dark" role="button">Saved Stocks</a>
+    <a href="/help/" class="btn btn-dark  active" role="button">Help</a>
+
+</div>
+
+<div class = 'pagecontent'>
+    <div class = 'pagetitle'>Help</div>
+    <div class = 'intro'>
+        <h1>Introduction</h1>
+        <p>
+            This webservice tool was built on the idea that we as consumers need more guidance in the expertise of stocks and knowing when to buy/sell them.
+            As a background to using the tool, you must have Django installed, as well as Python.  The user login information is stored on Django's builtin user data table.
+            Once you have Django and Python installed, the user can run the Webservice by entering the following command into the command line FROM THE DIRECTORY WHERE
+            THE SOURCE PROJECT FILES ARE SAVED:  'python manage.py runserver'
+        </p>
+        <p>
+            After connecting to the server, the user can enter the URL given in the command prompt window and use their credentials to log in.  If first time user, then use admin as user
+            and password as password.  This will open up the admin interface where the user can add themselves as a new user.
+        </p>
+
+
+    </div>
+    <div class = 'features'>
+        <h1>Key features:</h1>
+        <ul>
+            <li>
+                Predicts future stock prices based on user input of time window over which prediction is made, using machine learning.
+            </li>
+            <li>
+                User can save stocks directly from the "Search Stocks" page.  Once saved, they will show up in the "Saved Stocks" page.
+            </li>
+            <li>
+                User can search stocks in the "Search Stocks" page by entering any keyword for the stock.  They can even add filter by or order by criteria to sort the stocks in a certain fashion.
+            </li>
+            <li>
+                Upon each login, dashboard (home) page will load and alert user of what they missed since last log-in.  This alert is in the form of price increase/decrease from ONLY their saved stocks.
+            </li>
+            <li>
+                If user wants to know what a particular stock is, then they can simply hit the "Details" button in the individual stock container.
+            </li>
+            <li>
+                User can also see the past trends of the stock in the form of a line graph.  This populates from live data and is in the icon window of the stock container.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+</div>
+
+
+
+
+</body>
+</html>
+
+{% else %}
+<meta http-equiv="Refresh" content="0; url=/accounts/login" />
+{% endif %}
