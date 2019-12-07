@@ -104,7 +104,7 @@ def details(request, keywords=None):
     return render(request, 'stock_prediction/details.html', context)
 
 
-def help(request):
+def HelpPage(request):
     return render(request, 'stock_prediction/help.html')
 
 
@@ -119,6 +119,6 @@ urlpatterns = [
     path('search/<keywords>/', search),
     path('details/<keywords>', details),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('help/', help) 
+    path('help/', HelpPage) 
 ]
 
