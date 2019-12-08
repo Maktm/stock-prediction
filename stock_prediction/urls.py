@@ -17,13 +17,18 @@ import datetime
 
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-
+from django import forms
 from . import api, models
 
-# def index(request):
-#     return HttpResponse("andi oop.")
+
+
+class SaveForm(forms.Form):
+    ticker = forms.CharField(label='Ticker Symbol')
+
+
+
 
 
 class stocks:  
@@ -45,9 +50,21 @@ def get_current_date() -> str:
     )
 
 def dashboard(request):
-    return render(request, 'stock_prediction/dashboard.html', {
-        'date': get_current_date()
-    })
+    return render(request, 'stock_prediction/dashboard.html', {'date': get_current_date()})
+
+
+# def savestock(request):
+#     if request.method == 'POST':
+#         form = SaveForm(request.POST)
+
+#         if form.is_valid():
+#             return HttpResponseRedirect('/saved/')
+#     else:
+#         form = SaveForm()
+
+#     return render(request, 'search.html', {'form': form})
+
+
 
 def saved(request):
     saved_stocks = []
@@ -65,6 +82,21 @@ def saved(request):
     return render(request, 'stock_prediction/saved.html', context)
 
 def search(request, keywords=None):
+
+
+#SAVE FORM
+#OBTAINS TICKER NAME UPON CLICKING SAVE
+    if request.method == 'POST':
+        form = SaveForm(request.POST)
+
+        if form.is_valid():
+            ticker = form.cleaned_data['ticker']
+            print(ticker)
+            return HttpResponseRedirect('/saved/')
+    else:
+        form = SaveForm()
+#END SAVE FORM  
+
     results = None
     context = {
         'stocks': []
@@ -76,6 +108,7 @@ def search(request, keywords=None):
             stocklist.append(stocks(r.symbol, r.price, r.change))
         context = {
             'stocks': stocklist,
+            'form': form
         }
 
     return render(request, 'stock_prediction/search.html', context)
@@ -91,8 +124,6 @@ def details(request, keywords=None):
 
     for i in range(5):
         daily.append(float(stockhistory[i].price))
-       
-       
        
            
     context= {
