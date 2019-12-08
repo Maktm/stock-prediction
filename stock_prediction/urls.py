@@ -169,6 +169,9 @@ def prediction(request, ticker):
     return HttpResponse('''{{"predictions": [{}]}}
     '''.format(', '.join([str(e) for e in list(lr_prediction)])))
 
+def HelpPage(request):
+    return render(request, 'stock_prediction/help.html')
+
 urlpatterns = [
     path('', dashboard),
     path('admin/', admin.site.urls),
@@ -178,6 +181,7 @@ urlpatterns = [
     path('search/<keywords>/', search),
     path('details/<keywords>', details),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('prediction/<ticker>/', prediction)
+    path('prediction/<ticker>/', prediction),
+    path('help/', HelpPage)
 ]
 

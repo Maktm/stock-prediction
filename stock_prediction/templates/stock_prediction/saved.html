@@ -111,7 +111,7 @@
         <a href="/dashboard/" class="btn btn-dark" role="button">Dashboard</a>
         <a href="/search/" class="btn btn-dark" role="button">Search Stocks</a>
         <a href="/saved/" class="btn btn-dark  active" role="button">Saved Stocks</a>
-        <a href="#" class="btn btn-dark" role="button">Help</a>
+        <a href="/help/" class="btn btn-dark" role="button">Help</a>
 
     </div>
 
@@ -166,9 +166,6 @@
                     {% for stock in stocks %}
                         <div class="card mb-3">
                             <div class="row no-gutters">
-                                <div class="col-md-4 stockimage">
-
-                                </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <h5 class="card-title"> {{ stock.symbol }}</h5>
@@ -185,7 +182,9 @@
                                                     class="btn btn-danger stockbutton">{{ stock.change }}</button>
                                         {% endif %}
 
-                                        <button type="button" class="btn btn-info stockbutton">View Details</button>
+                                        <button type="button" class="btn btn-info stockbutton" onclick="onDetailsClicked('{{ stock.symbol }}')">
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -203,6 +202,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </body>
+
+    <script>
+    function onDetailsClicked(name) {
+            // Send a request back to the Django web application
+            // let inputData = document.getElementsByTagName('id')[0].value;
+            window.location = 'http://127.0.0.1:8000/details/' + name;
+            console.log(name);
+        }
+    </script>
 {% else %}
     <meta http-equiv="Refresh" content="0; url=/accounts/login"/>
 {% endif %}
