@@ -248,7 +248,7 @@
                                 </button>
                             </div>
                             <div class="col-md-4 offset-md-2">
-                                <h1 id="id_prediction"></h1>
+                                <canvas id="id_prediction" width="400" height="400"></canvas>
                             </div>
                         </div>
                     </div>
@@ -288,10 +288,46 @@
                 table.appendChild(tr);
             }
 
-            var predictionElement = document.getElementById('id_prediction');
-            predictionElement.appendChild(table);
+            var ctx = document.getElementById('id_prediction').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from(Array(30).keys()),
+                    datasets: [{
+                        label: '{{ stock.symbol }} prices over the next 30 days',
+                        data: pred_data['predictions'],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         }
     </script>
+
 
     <script type="application/javascript">
 
@@ -326,6 +362,6 @@
         });</script>
 
     </body>
-{%else %}
+{% else %}
     <meta http-equiv="Refresh" content="0; url=/accounts/login"/>
 {% endif %}
