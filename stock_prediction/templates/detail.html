@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        TODO: Add detail about a single stock
+    {% else %}
+        !-- Redirect to login page -->
+        <meta http-equiv="Refresh" content="0; url=/accounts/login"/>
+    {% endif %}
+
+{% endblock %}

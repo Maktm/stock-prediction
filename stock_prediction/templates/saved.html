@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% block stylesheets %}
+            <style>
+                h2 {
+                    color: white;
+                    text-align: right;
+                    padding-top: 10px;
+                }
+                .navigation {
+                    position: absolute;
+                    width: 250px;
+                    height: 1080px;
+                    background-color: rgb(43, 43, 43);
+                    z-index: 1000000;
+                }
+                .btn {
+                    width: 100%;
+                    height: 40px;
+                    margin-top: 5px;
+                }
+                .title {
+                    width: 150px;
+                    height: auto;
+                    margin-left: 90px;
+                }
+                .pagetitle {
+                    color: rgb(52, 52, 52);
+                    font-size: 100px;
+                    text-align: center;
+                }
+                .pagecontent {
+                    width: 1366px;
+                    height: 100vh;
+                    margin-left: 270px;
+                    position: absolute;
+                }
+                .stockimage {
+                    background-color: black;
+                    position: absolute;
+                    z-index: 10;
+
+                }
+                .card {
+                    width: 100% !important;
+                }
+                .card-title {
+                    font-size: 50px;
+                }
+                .card-text {
+                    font-size: 20px;
+                }
+                .card-subtitle {
+                    font-size: 30px;
+                }
+                .stockbutton {
+                    font-size: 20px;
+                    width: 150px;
+                }
+            </style>
+
+            <div class="navigation">
+                <div class="title"><h2>Stock Prediction Tool</h2></div>
+
+                <!-- Sidebars -->
+                <a href="{% url 'index' %}" class="btn btn-dark active" role="button">Dashboard</a>
+                <a href="{% url 'search' %}" class="btn btn-dark" role="button">Search Stocks</a>
+                <a href="{% url 'saved' %}" class="btn btn-dark" role="button">Saved Stocks</a>
+                <a href="{% url 'help' %}" class="btn btn-dark" role="button">Help</a>
+            </div>
+            <div class="pagecontent">
+                <div class="pagetitle">Saved Stocks</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="ex: NASDAQ"
+                                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Filter By:
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" type="button">Price Decreased</button>
+                                    <button class="dropdown-item" type="button">Price Increased</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort By:
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" type="button">Price</button>
+                                    <button class="dropdown-item" type="button">Alphabetically</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            {% for stock in stocks %}
+                                <div class="card mb-3">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4 stockimage">
+
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title"> {{ stock.name }}</h5>
+                                                <p class="card-text">{{ stock.company }}</p>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
+
+                                                {% if stock.arrow == "increase" %}
+                                                    <button type="button"
+                                                            class="btn btn-success stockbutton">{{ stock.change }}</button>
+                                                {% endif %}
+                                                {% if stock.arrow == "decrease" %}
+                                                    <button type="button"
+                                                            class="btn btn-danger stockbutton">{{ stock.change }}</button>
+                                                {% endif %}
+
+                                                <button type="button" class="btn btn-info stockbutton">View Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% else %}
+        <!-- Redirect to login page -->
+        <meta http-equiv="Refresh" content="0; url=/accounts/login"/>
+    {% endif %}
+
+{% endblock %}

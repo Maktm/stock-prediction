@@ -60,6 +60,11 @@ on `localhost:8000`.
 python3 manage.py runserver
 ```
 
+## Ignoring db.sqlite3 from git (*important*)
+```shell script
+git update-index --skip-worktree db.sqlite3
+```
+
 ## Making changes
 When making changes *please do not commit the SQLite database*. The
 database contains a single table/entity with the admin user for

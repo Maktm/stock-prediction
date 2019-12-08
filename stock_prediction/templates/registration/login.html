@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row h-100">
+        <div class="col-md-6" style="background-color: green;">
+            <!-- TODO: Add background -->
+        </div>
+        <div class="col-md-3 offset-md-1 align-self-center">
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Invalid username or password
+                </div>
+            {% endif %}
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <input type="text" class="form-control {% if form.errors %}is-invalid{% endif %}" id="id_username" name="username" aria-describedby="usernameHelp" autofocus required>
+                    <small id="usernameHelp" class="form-text text-muted">Usernames are case-sensitive</small>
+                </div>
+                <div class="form-group">
+                    <label for="id_password">Password</label>
+                    <input type="password" class="form-control {% if form.errors %}is-invalid{% endif %}" name="password" id="id_password" aria-describedby="passwordHelp" required>
+                    <small id="passwordHelp" class="form-text text-muted">Please do not forget your password</small>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Sign in">
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+    </div>
+
+    {% if next %}
+        {% if user.is_authenticated %}
+          <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+        {% else %}
+          <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+{#      {% if form.errors %}#}
+{#        <p>Your username and password didn't match. Please try again.</p>#}
+{#      {% endif %}#}
+{##}
+{##}
+{#      {% if next %}#}
+{#        {% if user.is_authenticated %}#}
+{#          <p>Your account doesn't have access to this page. To proceed,#}
+{#          please login with an account that has access.</p>#}
+{#        {% else %}#}
+{#          <p>Please login to see this page.</p>#}
+{#        {% endif %}#}
+{#      {% endif %}#}
+{##}
+{#      <form method="post" action="{% url 'login' %}">#}
+{#        {% csrf_token %}#}
+{#        <table>#}
+{#          <tr>#}
+{#            <td>{{ form.username.label_tag }}</td>#}
+{#            <td>{{ form.username }}</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#            <td>{{ form.password.label_tag }}</td>#}
+{#            <td>{{ form.password }}</td>#}
+{#          </tr>#}
+{#        </table>#}
+{#        <input type="submit" value="login" />#}
+{#        <input type="hidden" name="next" value="{{ next }}" />#}
+{#      </form>#}
+  
+{% endblock %}
