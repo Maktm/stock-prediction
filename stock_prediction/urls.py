@@ -60,10 +60,10 @@ def saved(request):
     try:
         results = models.SavedStock.objects.filter(user=request.user)
         for r in results:
-            saved_stocks.append(stocks('Saved Stock 1', r.name, 'Getting latest price', 'price increase/decrease', 'increase'))
+            saved_stocks.append(stocks(r.symbol, r.name, 0))
     except Exception as error:
         # Failed to find any saved stocks
-        pass
+        print(error)
 
     context= {
         'stocks': saved_stocks,
@@ -78,7 +78,7 @@ def search(request, keywords=None):
 
         if form.is_valid():
             ticker = form.cleaned_data['ticker']
-            print(ticker)
+            models.SavedStock(user=request.user, symbol=ticker, name='Company').save()
             return HttpResponseRedirect('/saved/')
     else:
         form = SaveForm()
