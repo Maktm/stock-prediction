@@ -22,24 +22,16 @@ from django.shortcuts import render
 from django import forms
 from . import api, models
 
-
-
 class SaveForm(forms.Form):
     ticker = forms.CharField(label='Ticker Symbol')
-
-
-
-
 
 class stocks:  
     def __init__(stock, symbol, price, change):
         stock.symbol = symbol 
         stock.price = price
         stock.change = change
-        
-   
-# creating list        
 
+# creating list
 def get_current_date() -> str:
     today = datetime.date.today()
     return '{} {} {}, {}'.format(
@@ -52,7 +44,6 @@ def get_current_date() -> str:
 def dashboard(request):
     return render(request, 'stock_prediction/dashboard.html', {'date': get_current_date()})
 
-
 # def savestock(request):
 #     if request.method == 'POST':
 #         form = SaveForm(request.POST)
@@ -63,8 +54,6 @@ def dashboard(request):
 #         form = SaveForm()
 
 #     return render(request, 'search.html', {'form': form})
-
-
 
 def saved(request):
     saved_stocks = []
@@ -82,8 +71,6 @@ def saved(request):
     return render(request, 'stock_prediction/saved.html', context)
 
 def search(request, keywords=None):
-
-
 #SAVE FORM
 #OBTAINS TICKER NAME UPON CLICKING SAVE
     if request.method == 'POST':
@@ -115,27 +102,26 @@ def search(request, keywords=None):
 
 
 def details(request, keywords=None):
-    
+    print('Foo bar {}'.format(keywords))
     daily = []
+    stockdetail = None
+    stockhistory = None
  
     if not keywords is None:
-        stockdetail = api.get_stock_quote(keywords)
-        stockhistory = api.get_stock_history(keywords)
+        try:
+            stockdetail = api.get_stock_quote(keywords)
+            stockhistory = api.get_stock_history(keywords)
 
-    for i in range(5):
-        daily.append(float(stockhistory[i].price))
-       
-           
+            for i in range(5):
+                daily.append(float(stockhistory[i].price))
+        except:
+            pass
+
     context= {
-        'stock': stockdetail,
-        'daily': daily,
-       
-        
+        'stock': stockdetail if stockdetail is not None else [],
+        'daily': daily if daily is not None else [],
     }
     return render(request, 'stock_prediction/details.html', context)
-
-
-
 
 urlpatterns = [
     path('', dashboard),
