@@ -159,14 +159,14 @@
 
                             {% for stock in stocks %}
                             <div class="card mb-3">
-                                   
+
                                     <div class="row no-gutters">
                                         <div class="col-md-4 stockimage">
-                                           
+
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <h5 class="card-title"> {{ stock.name }}</h5>
+                                                <h5 class="card-title"> {{ stock.symbol }}</h5>
                                                 <p class="card-text">{{ stock.company }}</p>
                                                 <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
 

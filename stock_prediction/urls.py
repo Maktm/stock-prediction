@@ -60,9 +60,9 @@ def saved(request):
     try:
         results = models.SavedStock.objects.filter(user=request.user)
         for r in results:
-            saved_stocks.append(stocks(r.symbol, r.name, 0))
+            # get the company info
+            saved_stocks.append(stocks(r.symbol, "", 0))
     except Exception as error:
-        # Failed to find any saved stocks
         print(error)
 
     context= {
@@ -75,7 +75,6 @@ def search(request, keywords=None):
 #OBTAINS TICKER NAME UPON CLICKING SAVE
     if request.method == 'POST':
         form = SaveForm(request.POST)
-
         if form.is_valid():
             ticker = form.cleaned_data['ticker']
             models.SavedStock(user=request.user, symbol=ticker, name='Company').save()

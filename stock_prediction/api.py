@@ -22,7 +22,6 @@ class StockQuote:
 		self.date = date
 		self.price = price
 
-
 class StockDetails:
 	def __init__(self, symbol, date, price, open, high, low, volume, previous_close, change, change_percent) -> None:
 		self.symbol = symbol
@@ -35,9 +34,6 @@ class StockDetails:
 		self.previous_close = float(previous_close)
 		self.change = float(change)
 		self.change_percent = change_percent
-
-
-
 
 def get_stock_history(symbol) -> List[StockQuote]:
 	"""
