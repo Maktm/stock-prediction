@@ -1,208 +1,208 @@
 {% if user.is_authenticated %}
-<style type="text/css">
-    h2{
-        color: white;
-        text-align: right;
-        padding-top: 10px;
-    }
+    <style type="text/css">
+        h2 {
+            color: white;
+            text-align: right;
+            padding-top: 10px;
+        }
 
-    .navigation{
-        position: absolute;
-        width: 250px;
-        height: 1080px;
-        background-color: rgb(43, 43, 43);
-        z-index: 1000000;
-    }
+        .navigation {
+            position: absolute;
+            width: 250px;
+            height: 1080px;
+            background-color: rgb(43, 43, 43);
+            z-index: 1000000;
+        }
 
-    .btn{
-        width: 100%;
-        height: 40px; 
-        margin-top: 5px;
-       
-    }
+        .btn {
+            width: 100%;
+            height: 40px;
+            margin-top: 5px;
 
-    .title{
-        width: 150px;
-        height: auto;
-        margin-left: 90px;
-    }
+        }
 
- 
-
-    .pagetitle{
-        color: rgb(52, 52, 52);
-        font-size: 100px;
-        text-align: center;
-    }
-
-    .pagecontent{
-        width: 1366px;
-        height: 100vh;
-        margin-left: 270px;
-        position: absolute;
-        
-        
-    }
-/* 
-    .search{
-        width: 500px !important;
-    }
-
-    .dropdown{
-        width: 200px;
-       
-    } */
-
-    .stockimage{
-        background-color: black;
-        position: absolute;
-        z-index: 10;
-       
-    }
-    
-    .card{
-        width: 100% !important;
-    }
-    .card-title{
-        font-size: 50px;
-    }
-    .card-text{
-        font-size: 20px;
-    }
-    .card-subtitle{
-        font-size: 30px;
-    }
-    .stockbutton{
-        font-size: 20px;
-        width: 150px;
-    }
+        .title {
+            width: 150px;
+            height: auto;
+            margin-left: 90px;
+        }
 
 
-</style>
-<body>
+        .pagetitle {
+            color: rgb(52, 52, 52);
+            font-size: 100px;
+            text-align: center;
+        }
 
-    <head> 
-        
-        
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        
-       
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-           
-            
+        .pagecontent {
+            width: 1366px;
+            height: 100vh;
+            margin-left: 270px;
+            position: absolute;
+
+
+        }
+
+        /*
+            .search{
+                width: 500px !important;
+            }
+
+            .dropdown{
+                width: 200px;
+
+            } */
+
+        .stockimage {
+            background-color: black;
+            position: absolute;
+            z-index: 10;
+
+        }
+
+        .card {
+            width: 100% !important;
+        }
+
+        .card-title {
+            font-size: 50px;
+        }
+
+        .card-text {
+            font-size: 20px;
+        }
+
+        .card-subtitle {
+            font-size: 30px;
+        }
+
+        .stockbutton {
+            font-size: 20px;
+            width: 150px;
+        }
+
+
+    </style>
+    <body>
+
+    <head>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+
 
     </head>
 
-    
 
     <div class="navigation">
         <div class="title"><h2>Stock Prediction Tool</h2></div>
 
         <a href="/dashboard/" class="btn btn-dark" role="button">Dashboard</a>
-        <a href="/search/"  class="btn btn-dark" role="button">Search Stocks</a>
-        <a href="/saved/"  class="btn btn-dark  active" role="button">Saved Stocks</a>
+        <a href="/search/" class="btn btn-dark" role="button">Search Stocks</a>
+        <a href="/saved/" class="btn btn-dark  active" role="button">Saved Stocks</a>
         <a href="#" class="btn btn-dark" role="button">Help</a>
 
     </div>
 
     <div class="pagecontent">
-            <div class="pagetitle">Saved Stocks</div>
+        <div class="pagetitle">Saved Stocks</div>
 
-     
 
-            <div class="container">
-                    <div class="row">
-                      <div class="col-sm">
-                            <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="ex: NASDAQ" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                    <div class="input-group-append">
-                                      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
-                                    </div>
-                                  </div>
-                      </div>
-                      <div class="col-sm">
-                           
-                            <div class="dropdown">
-                                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Filter By:
-                                 </button>
-                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                   <button class="dropdown-item" type="button">Price Decreased</button>
-                                   <button class="dropdown-item" type="button">Price Increased</button>
-                                 </div>
-                               </div>
-                      </div>
-                      <div class="col-sm">
-                           
-                            <div class="dropdown">
-                                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Sort By: 
-                                 </button>
-                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                   <button class="dropdown-item" type="button">Price</button>
-                                   <button class="dropdown-item" type="button">Alphabetically</button>
-                                  
-                                 </div>
-                               </div>
-                      </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="ex: NASDAQ"
+                               aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                        </div>
                     </div>
-                  </div>
+                </div>
+                <div class="col-sm">
 
-            <div class="container">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Filter By:
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">Price Decreased</button>
+                            <button class="dropdown-item" type="button">Price Increased</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
 
-                    <div class="row">
-                      <div class="col-sm">
-{{form_data}}
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort By:
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">Price</button>
+                            <button class="dropdown-item" type="button">Alphabetically</button>
 
-                            {% for stock in stocks %}
-                            <div class="card mb-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_data }}
+                    {% for stock in stocks %}
+                        <div class="card mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 stockimage">
 
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4 stockimage">
-
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title"> {{ stock.symbol }}</h5>
-                                                <p class="card-text">{{ stock.company }}</p>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title"> {{ stock.symbol }}</h5>
+                                        <p class="card-text">{{ stock.company }}</p>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ stock.price }}</h6>
 
 
-                                                {% if stock.arrow == "increase" %}
-                                                <button type="button" class="btn btn-success stockbutton">{{ stock.change }}</button>
-                                                {% endif %}
-                                                {% if stock.arrow == "decrease" %}
-                                                <button type="button" class="btn btn-danger stockbutton">{{ stock.change }}</button>
-                                                {% endif %}
-                                               
-                                                <button type="button" class="btn btn-info stockbutton">View Details</button>
-                                            </div>
-                                        </div>
+                                        {% if stock.arrow == "increase" %}
+                                            <button type="button"
+                                                    class="btn btn-success stockbutton">{{ stock.change }}</button>
+                                        {% endif %}
+                                        {% if stock.arrow == "decrease" %}
+                                            <button type="button"
+                                                    class="btn btn-danger stockbutton">{{ stock.change }}</button>
+                                        {% endif %}
+
+                                        <button type="button" class="btn btn-info stockbutton">View Details</button>
                                     </div>
                                 </div>
-                      
-                       {% endfor %}
                             </div>
-                     
-                    </div>
-
-
-                  </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-    
-
-    
-
 
     <!-- <h1> DASHBOARD</h1>
     <a href="/search/">SEARCH</a>
     <a href="/saved/">SAVED</a>
     <a href="/details/">DETAILS</a> -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </body>
 {% else %}
-    <meta http-equiv="Refresh" content="0; url=/accounts/login" />
+    <meta http-equiv="Refresh" content="0; url=/accounts/login"/>
 {% endif %}

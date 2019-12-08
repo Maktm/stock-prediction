@@ -50,7 +50,7 @@ def get_stock_history(symbol) -> List[StockQuote]:
 	payload = json.loads(response.text)
 	ts_key = 'Time Series (Daily)'
 	if not ts_key in payload:
-		raise Exception('Invalid response from API request (bad body)')
+		print('Bad body received, payload={}'.format(payload))
 
 	history = dict(payload[ts_key])
 	stock_quotes = []

@@ -22,6 +22,12 @@ from django.shortcuts import render
 from django import forms
 from . import api, models
 
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split
+
 class SaveForm(forms.Form):
     ticker = forms.CharField(label='Ticker Symbol')
 
@@ -122,6 +128,47 @@ def details(request, keywords=None):
     }
     return render(request, 'stock_prediction/details.html', context)
 
+def date_to_int(s):
+    def to_integer(dt_time):
+        return 10000 * dt_time.year + 100 * dt_time.month + dt_time.day
+    d = datetime.datetime.strptime(s, "%Y-%m-%d").date()
+    return to_integer(d)
+
+def prediction(request, ticker):
+    """
+    Uses linear regression to generate a prediction for a stock.
+    """
+    print('[+] generating stock prediction')
+    history = api.get_stock_history(ticker)
+    dates = []
+    prices = []
+    for q in history:
+        dates.append(date_to_int(q.date))
+        prices.append(q.price)
+    df = pd.DataFrame(list(zip(dates, prices)), columns=['Date', 'Adj. Close'])
+    forecast_out = 30 # number of days to forecast ahead
+    df['Prediction'] = df[['Adj. Close']].shift(-forecast_out)
+
+    X = np.array(df.drop(['Prediction'], 1))
+    X = X[:-forecast_out]
+
+    y = np.array(df['Prediction'])
+    y = y[:-forecast_out]
+
+    # 80% training, 20% testing
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+    lr = LinearRegression()
+    lr.fit(x_train, y_train)
+
+    x_forecast = np.array(df.drop(['Prediction'], 1))[-forecast_out:]
+    lr_prediction = lr.predict(x_forecast)
+
+    print(type(lr_prediction))
+
+    return HttpResponse('''{{"predictions": [{}]}}
+    '''.format(', '.join([str(e) for e in list(lr_prediction)])))
+
 urlpatterns = [
     path('', dashboard),
     path('admin/', admin.site.urls),
@@ -131,6 +178,6 @@ urlpatterns = [
     path('search/<keywords>/', search),
     path('details/<keywords>', details),
     path('accounts/', include('django.contrib.auth.urls')),
-   
+    path('prediction/<ticker>/', prediction)
 ]
 
