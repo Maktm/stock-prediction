@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+stock_prediction/__pycache__/
 *.py[cod]
 *$py.class
 
@@ -123,3 +124,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# PyCharm
+.idea/
