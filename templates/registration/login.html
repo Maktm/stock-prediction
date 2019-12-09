@@ -1,33 +1,64 @@
 {% extends "base_generic.html" %}
 
-
 {% block content %}
 
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+    {% if form.errors %}
+        <div class="row h-100" style = "height: 300px;">
 
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
+            <div class="col-md-3 offset-md-4 align-self-center">
+                <div class="alert alert-danger" role="alert">
+                    Invalid username/password
+                </div>
+                <form method="post" action="/accounts/login/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text" class="form-control is-invalid" name="username" id="id_username" autofocus
+                               required>
+                        <small class="form-text text-muted">Usernames are located in the SQLite database on GitHub
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" class="form-control is-invalid" id="id_password" name="password"
+                               required>
+                        <small class="form-text text-muted">Please don't forget your password</small>
+                    </div>
+                    <input type="submit" value="Sign in" class="btn btn-primary"/>
+                    <input type="hidden" name="next" value=""/>
+                </form>
+            </div>
+        </div>
     {% else %}
-      <p>Please login to see this page.</p>
+        <div class="row h-100" style = "height: 300px;">
+            <div class="col-md-3 offset-md-4 align-self-center">
+                <form method="post" action="/accounts/login/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text" class="form-control" name="username" id="id_username" autofocus required>
+                        <small class="form-text text-muted">Usernames are located in the SQLite database on GitHub
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" class="form-control" id="id_password" name="password" required>
+                        <small class="form-text text-muted">Please don't forget your password</small>
+                    </div>
+                    <input type="submit" value="Sign in" class="btn btn-primary"/>
+                    <input type="hidden" name="next" value=""/>
+                </form>
+            </div>
+        </div>
     {% endif %}
-  {% endif %}
 
-  <div class="container h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-md-4 offset-md-4">
-            <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-              <input type="text" class="form-control" name="username" placeholder="Username" required autofocus id="id_username" />
-              <input type="password" class="form-control" name="password" placeholder="Password" required id="id_password"/>
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-              {# Assumes you setup the password_reset view in your URLconf #}
-              <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-            </form>
-    </div>
-  </div>
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
 
 {% endblock %}
