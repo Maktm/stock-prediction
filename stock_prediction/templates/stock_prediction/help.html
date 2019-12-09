@@ -1,4 +1,5 @@
 {% if user.is_authenticated %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,12 +10,12 @@
 </head>
 
 <style type="text/css">
-    .pagecontent{
-        background-color: #544490;
-        color: #000;
-        position: absolute;
-
+    h2{
+        color: white;
+        text-align: right;
+        padding-top: 10px;
     }
+
     .navigation{
         position: absolute;
         width: 250px;
@@ -44,6 +45,18 @@
         font-size: 100px;
         text-align: center;
     }
+    .intro{
+
+    }
+    .cmd {
+        font-style: italic;
+    }
+    .question{
+        font-size: xx-large;
+        
+
+
+    }
 
 </style>
 
@@ -67,6 +80,45 @@
         <h1>Introduction</h1>
         <p>
             This webservice tool was built on the idea that we as consumers need more guidance in the expertise of stocks and knowing when to buy/sell them.
+            For the puposes of this tool, we used imported stock prices in the past from AlphaVantage.  With these prices, we used machine learning to predict future
+            stock prices over a given time window.  The implementation was done in primarily HTML, CSS, JavaScript with Python for machine learning and the Bootstrap CSS framework.
+        </p>
+
+        <h1>Frequently Asked Questions and Issues</h1>
+        <ol>
+            <li class = "question">Why can't I connect to the Web Application?
+                <ul>
+                    <li>Since the tool uses the Django server, you must be connected to it first. Open up the directy where the source code for this tool is in the command line and enter the following command: </li>
+                    <ul><li class = "cmd">python manage.py runserver</li></ul>
+                    <li>You might have the wrong username and password</li>
+                    <li>You might not be connected to the internet</li>
+                    <li>You must be using Google Chrome, Safari, Firefox, or Internet Explorer.  Any other browser will not support it</li>
+                </ul>
+            </li>
+            <br>
+            <li class = "question">Why is it loading so slowly if at all?
+                <ul>
+                    <li>If all the pages are loading slowly then it might be a connection issue.  Restart server and computer, then try again</li>
+                    <li>If search page is loading slowly then it is because the API used pulls 5 stocks every minute.  Takes full minute till search can be redone. </li>
+                    <li>If the saved stock page is loading slowly, it is also an API issue where it needs a full minute or the API might be down</li>
+                </ul>
+            </li>
+            <br>
+            <li class = "question">Why does Dashboard not alert me of my stock changes?
+                <ul>
+                    <li>The API might be down</li>
+                    <li>You need to save stocks first, since this page pulls changes from your saved stocks page.</li>
+                </ul>
+            </li>
+            <br>
+            <li class = "question">Why does the Search Page only load 5 stocks?
+                <ul><li>Unfortunately, that is just the API used.  AlphaVantage only allows users to pull 5 stocks every 60 seconds (1 minute). </li></ul>
+            </li>
+            <li class = "question">Why is the Search Page loading so slowly?</li>
+
+
+        </ol>
+        <p>
             As a background to using the tool, you must have Django installed, as well as Python.  The user login information is stored on Django's builtin user data table.
             Once you have Django and Python installed, the user can run the Webservice by entering the following command into the command line FROM THE DIRECTORY WHERE
             THE SOURCE PROJECT FILES ARE SAVED:  'python manage.py runserver'
@@ -112,7 +164,6 @@
 
 </body>
 </html>
-
 {% else %}
 <meta http-equiv="Refresh" content="0; url=/accounts/login" />
 {% endif %}
